@@ -9,7 +9,7 @@ A rating site for student to rate their professor and to provide postive feedbac
 2. npm install/yarn
 3. php artisan migrate
 4. php artisan serve-port:8000
-- font-end
+- front-end
 1. npm install
 2. npm start
 # Collaborate with me
