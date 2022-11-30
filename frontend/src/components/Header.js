@@ -6,8 +6,23 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
+import {useDispatch,useSelector} from 'react-redux'
+import {logout} from '../actions/userAction'
+import { Toast } from './Toast';
 const Header = () => {
-  return (
+  const dispatch = useDispatch()
+ const userLogin = useSelector(state => state.userLogin)
+ const { userInfo } = userLogin
+
+const logoutHandler=()=>{
+  dispatch(logout())
+  Toast.fire({
+    icon: 'success',
+    title: 'Logout successful'
+  })
+}
+
+ return (
     <Navbar>
     <Container fluid>
     <Navbar.Brand href="#">Rate My Professor</Navbar.Brand>
@@ -21,27 +36,30 @@ const Header = () => {
         <LinkContainer to="/">
           <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/login">
-          <Nav.Link>Sign In</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/register">
-          <Nav.Link>Register</Nav.Link>
-          </LinkContainer>
-       
-       
-        {/* <NavDropdown title="Link" id="navbarScrollingDropdown">
-          <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+          {userInfo ? ( 
+          <>
+          <NavDropdown title={userInfo.user.name} id="navbarScrollingDropdown">
           <NavDropdown.Item href="#action4">
-            Another action
+           Profile
           </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action5">
-            Something else here
+          <NavDropdown.Item  onClick={logoutHandler}>
+            Logout
           </NavDropdown.Item>
-        </NavDropdown>
-        <Nav.Link href="#" disabled>
-          Link
-        </Nav.Link> */}
+          </NavDropdown>
+  
+          </>):(<>
+            <LinkContainer to="/login">
+            <Nav.Link>Sign In</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/register">
+            <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
+          </>
+          ) }
+      
+       
+       
       </Nav>
       <Form className="d-flex">
         <Form.Control
