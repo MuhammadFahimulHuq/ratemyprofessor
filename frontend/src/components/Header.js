@@ -23,15 +23,13 @@ const logoutHandler=()=>{
 }
 
  return (
-    <Navbar>
+    <Navbar expand="lg" collapseOnSelect>
     <Container fluid>
     <Navbar.Brand href="#">Rate My Professor</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbarScroll" />
     <Navbar.Collapse id="navbarScroll">
       <Nav
         className="me-auto my-2 my-lg-0"
-        style={{ maxHeight: '100px' }}
-        navbarScroll
       >
         <LinkContainer to="/">
           <Nav.Link>Home</Nav.Link>

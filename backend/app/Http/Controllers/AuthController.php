@@ -124,9 +124,10 @@ class AuthController extends Controller
         ]);
         if ($field->fails()) {
             return response()->json([
-                'status' => 422,
-                'errors' => $field->messages(),
-            ]);
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $field->errors(),
+            ], 401);
         }
         $role = Role::where('role_name', 'Faculty')->first();
         if (!$role) {
@@ -151,16 +152,15 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('rateProfessor')->plainTextToken;
-        $response = [
+        return response()->json([
             'user' => $user,
             'role' => $user->roles()->get(),
             'token' => $token,
             'message' => 'Registration Successful!',
-            'status' => 200
-        ];
-
-        return response($response, 201);
+            'status' => true
+        ], 201);
     }
+
 
     public function getFaculty()
     {

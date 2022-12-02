@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container,Row,Col,Form,Button } from 'react-bootstrap';
 import{useDispatch,useSelector} from 'react-redux'
-import {register} from '../actions/userAction'
+import {register,registerFaculty} from '../actions/userAction'
 import { useNavigate } from 'react-router-dom';
 import FormError from '../components/FormError'
 import Message from '../components/Message'
@@ -15,6 +15,8 @@ const RegisterScreen = () => {
     const[phoneNo,setPhoneNo] = useState('')
     const[password,setPassword]=useState('')
     const[password_confirmation,setPasswordConfirmation]=useState('')
+    const[student,setStudent] = useState('')
+    const[faculty,setFaculty] = useState('')
     const[message,setMessage] = useState('')
     const userRegister = useSelector(state=>state.userRegister)
     const{loading,error,userInfo} = userRegister
@@ -27,16 +29,18 @@ if(userInfo){
     })
     navigate('/')
 }
-},[userInfo,navigate,Toast])
+},[userInfo,navigate])
 
 const FormSubmit=(e)=>{
     e.preventDefault()
     if(password !==password_confirmation){
         setMessage('Confirm password do not match!')
     }
-    else{
+    if(student === "student"){
     dispatch(register(name,email,phoneNo,password,password_confirmation))
-
+    }
+    else if(faculty === "faculty"){
+        dispatch(registerFaculty(name,email,phoneNo,password,password_confirmation))
     }
 }
   return (
@@ -72,6 +76,29 @@ const FormSubmit=(e)=>{
                 <Form.Control type="password" placeholder="Enter confirm password"  name="password_confirmation" value={password_confirmation} onChange={e=>setPasswordConfirmation(e.target.value)} />
                 {message ? <FormError>{message}</FormError>:(<></>)}
                 </Form.Group>
+               <Form.Group>
+                <Form.Label>Your profession</Form.Label>
+               <Form.Check
+               inline 
+            type="radio"
+            name="role"
+            id="student"
+            label="Student"
+            value={student}
+            onChange={e=>setStudent("student")}
+            />
+          <Form.Check
+          inline
+          name="role"
+            type="radio"
+            label="Teacher"
+            id="teacher"
+            value={faculty}
+            onChange={e=>setFaculty("faculty")}
+             />
+               </Form.Group>
+           
+       
                 <Button variant='primary' type="submit">Sign up</Button>
                 </Form>
             </Col>
