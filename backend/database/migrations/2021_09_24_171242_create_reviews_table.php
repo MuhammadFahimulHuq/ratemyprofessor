@@ -17,16 +17,12 @@ class CreateReviewsTable extends Migration
             $table->increments('id');
             $table->integer('rating');
             $table->text('comment');
-            $table->integer('like')->nullable();
-            $table->integer('dislike')->nullable();
+            $table->integer('like')->default(0);
+            $table->integer('dislike')->default(0);
             $table->timestamps();
-            $table->unsignedInteger('reviewBy_id');
-            $table->foreign('reviewBy_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedInteger('reviewFor_id');
-            $table->foreign('reviewFor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
- 
     }
 
     /**

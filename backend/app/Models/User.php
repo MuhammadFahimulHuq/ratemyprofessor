@@ -12,6 +12,7 @@ use App\Models\Qualification;
 use App\Models\Research;
 use App\Models\Course;
 use App\Models\University;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -46,19 +47,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function roles(){
-        return $this->belongsToMany(Role::class,'user_roles');
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
     }
-    public function qualifications(){
+    public function qualifications()
+    {
         return $this->belongsToMany(Qualification::class);
     }
-    public function courses(){
-        return $this->belongsToMany(Course::class,'user_courses');
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'user_courses');
     }
-    public function university(){
-        return $this->belongsToMany(University::class,'user_universities');
+    public function university()
+    {
+        return $this->belongsToMany(University::class, 'user_universities');
     }
-    public function research(){
-        return $this->belongsToMany(Research::class,'user_research');
+    public function research()
+    {
+        return $this->belongsToMany(Research::class, 'user_research');
+    }
+    public function review()
+    {
+        return $this->belongsToMany(Review::class, 'user_review');
     }
 }

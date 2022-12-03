@@ -33,7 +33,8 @@ Route::get('/greeting', function () {
 Route::post('/student/register', [AuthController::class, 'registerStudent']);
 Route::post('/faculty/register', [AuthController::class, 'registerFaculty']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/faculities', [AuthController::class, 'getFaculty']);
+Route::get('/faculties', [AuthController::class, 'getFaculty']);
+Route::get('/faculty/{id}', [AuthController::class, 'getFacultyById']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);

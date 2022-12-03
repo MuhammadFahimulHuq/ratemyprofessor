@@ -1,4 +1,4 @@
-import { USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,USER_REGISTER_REQUEST } from "../constants/userConstant";
+import { USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,USER_REGISTER_REQUEST, USER_FACULTY_REQUEST, USER_FACULTY_SUCCESS, USER_FACULTY_FAIL } from "../constants/userConstant";
 
 export const userLoginReducer=(state={},action)=>{
     switch(action.type){
@@ -38,4 +38,27 @@ export const userRegisterReducer = (state={},action)=>{
             default:
                 return state
         }
+    }
+export const getAllFacultyReducer = (state={faculties:[]},action)=>{
+    switch(action.type){
+        case USER_FACULTY_REQUEST:
+            return {
+                loading:true,
+                faculties:[]
+            }
+        case USER_FACULTY_SUCCESS:{
+            return {
+                loading:false,
+                faculties:action.payload
+            }
+        }
+        case USER_FACULTY_FAIL:{
+            return {
+                loading:false,
+                error:action.payload
+            }
+        }
+        default:
+            return state    
+        }   
     }

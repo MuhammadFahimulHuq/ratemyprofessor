@@ -67,13 +67,7 @@ class AuthController extends Controller
 
 
 
-    public function logout(Request $request)
-    {
-        auth()->user()->tokens()->delete();
-        return [
-            'message' => 'logged out'
-        ];
-    }
+
 
 
 
@@ -169,14 +163,9 @@ class AuthController extends Controller
         })->get();
         return $user;
     }
-    public function getUser()
+    public function getFacultyById($id)
     {
-        if (auth()->user()) {
-            $response = [
-                'user' => auth()->user(),
-
-            ];
-            return response($response, 200);
-        }
+        $user = User::find($id);
+        return $user;
     }
 }
