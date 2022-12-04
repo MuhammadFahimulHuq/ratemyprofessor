@@ -7,6 +7,7 @@ import FormError from '../components/FormError'
 import Message from '../components/Message'
 import {Toast} from '../components/Toast'
 import Loader from '../components/Loader'
+
 const RegisterScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()

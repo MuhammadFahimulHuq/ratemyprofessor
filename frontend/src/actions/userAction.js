@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { USER_FACULTY_FAIL, USER_FACULTY_REQUEST, USER_FACULTY_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from '../constants/userConstant'
+import { USER_FACULTY_DETAIL_FAIL, USER_FACULTY_DETAIL_REQUEST, USER_FACULTY_DETAIL_SUCCESS, USER_FACULTY_FAIL, USER_FACULTY_REQUEST, USER_FACULTY_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from '../constants/userConstant'
 
 export const login=(email,password)=> async(dispatch)=>{
     try{
@@ -111,6 +111,27 @@ dispatch({
     type:USER_FACULTY_FAIL,
             payload: error.response && error.response.data.errors ? 
             error.response.data.errors : error.response.data
- })   
+ })}
 }
+export const facultyDetailById=(id)=>async(dispatch)=>{
+    try{
+        dispatch({
+            type:USER_FACULTY_DETAIL_REQUEST
+        })
+        const config = {
+            headers:{
+                'Content-type':'application/json'
+            }
+        }
+        const {data} = await axios.get(`http://127.0.0.1:8000/api/faculty/${id}`,config)
+    dispatch({
+        type:USER_FACULTY_DETAIL_SUCCESS,
+        payload:data
+    })
+    }catch(error){
+     dispatch({
+        type:USER_FACULTY_DETAIL_FAIL,
+                payload: error.response && error.response.data.errors ? 
+                error.response.data.errors : error.response.data
+     })}
 }

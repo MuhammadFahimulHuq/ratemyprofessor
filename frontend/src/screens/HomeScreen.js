@@ -16,9 +16,9 @@ return (
 <>
 {loading && <Loader />}
 {error && <Message variant="danger">{error}</Message>}
-<Row>
+<Row >
 {faculties.map(faculty=>(
-  <Col className="" key={faculty.id}><FacultyCard faculty={faculty}/></Col>
+  <Col className="my-2" sm={12} md={6} lg={4} key={faculty.id}><FacultyCard faculty={faculty}/></Col>
 ))}
 </Row>
 </>

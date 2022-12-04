@@ -3,6 +3,7 @@ import LoginScreen  from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen"
 import Navbar from "./components/Header"
 import HomeScreen from "./screens/HomeScreen";
+import { FacultyDetailScreen } from "./screens/FacultyDetailScreen";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
       <Route path="/" exact element={<HomeScreen />}/>
         <Route path="/login" element={<LoginScreen />}/>
           <Route path="/register" element={<RegisterScreen />}/>
+          <Route path="/faculty/:id" element={<FacultyDetailScreen/>}/>
       </Routes>
       </main>
       </BrowserRouter>
