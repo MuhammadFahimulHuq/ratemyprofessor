@@ -4,10 +4,14 @@ import { useParams } from 'react-router-dom'
 import {facultyDetailById} from '../actions/userAction'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import {Container,Row,Col,Button} from 'react-bootstrap'
+import {Container,Row,Col,Button,Form} from 'react-bootstrap'
+
 export const FacultyDetailScreen = () => {
   const facultyDetail = useSelector(state=>state.facultyDetail) 
   const {loading,error,faculty} = facultyDetail 
+  const userLogin = useSelector(state=>state.userLogin)
+  const{userInfo} = userLogin
+
   const dispatch = useDispatch()
   const {id} = useParams()
   useEffect(()=>{
@@ -21,11 +25,28 @@ export const FacultyDetailScreen = () => {
       <Row>
         <Col className="d-flex flex-column col-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"  alt=""/>
-        <Button variant="outline-primary" className="mt-1">Upload Photo</Button>
+    {userInfo.user.id === faculty.id ?(<>
+     <Button variant="outline-primary" className="mt-1">Upload Photo</Button>
+     </>):(<></>)
+     }
         </Col>
-        <Col>
+        <Col >
          <p>{faculty.name}</p>   
           <p>Email : {faculty.email}</p> 
+          <Form>
+                <Form.Select aria-label="Default select example">
+            <option>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </Form.Select>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Review the faculty - {faculty.name}</Form.Label>
+        <Form.Control as="textarea" rows={3} />
+        <Button type="submit" >Comment</Button>
+      </Form.Group>
+     
+          </Form>
         </Col>
       </Row>
     </Container>
