@@ -35,11 +35,11 @@ Route::post('/faculty/register', [AuthController::class, 'registerFaculty']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/faculties', [AuthController::class, 'getFaculty']);
 Route::get('/faculty/{id}', [AuthController::class, 'getFacultyById']);
+Route::get('/get/review/{id}', [ReviewController::class, 'findReviewBy']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/review/{id}', [ReviewController::class, 'store']);
-    Route::get('/get/review/{id}', [ReviewController::class, 'findReviewBy']);
     Route::get('/reply/{id}', [ReplyController::class, 'getReplyByReviewId']);
     Route::post('/reply/{id}', [ReplyController::class, 'store']);
     Route::post('/user/university', [UniversityController::class, 'storeUserUniversity']);

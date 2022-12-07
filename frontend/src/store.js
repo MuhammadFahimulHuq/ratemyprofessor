@@ -2,11 +2,13 @@ import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import {userLoginReducer,userRegisterReducer,getAllFacultyReducer, facultyDetailReducer} from './reducers/userReducer' 
+import { getReviewReducer } from './reducers/reviewReducer'
 const reducer = combineReducers({
 userLogin: userLoginReducer,
 userRegister:userRegisterReducer,
 getAllFaculty:getAllFacultyReducer,
 facultyDetail : facultyDetailReducer,
+getReviews : getReviewReducer,
 })
 
 

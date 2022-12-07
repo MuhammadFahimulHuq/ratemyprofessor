@@ -3,7 +3,7 @@ import LoginScreen  from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen"
 import Navbar from "./components/Header"
 import HomeScreen from "./screens/HomeScreen";
-import { FacultyDetailScreen } from "./screens/FacultyDetailScreen";
+import FacultyDetailScreen  from "./screens/FacultyDetailScreen";
 function App() {
   return (
     <div className="App">
