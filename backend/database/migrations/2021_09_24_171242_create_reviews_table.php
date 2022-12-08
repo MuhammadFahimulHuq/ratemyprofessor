@@ -20,8 +20,9 @@ class CreateReviewsTable extends Migration
             $table->integer('like')->default(0);
             $table->integer('dislike')->default(0);
             $table->timestamps();
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name');
+            $table->unsignedInteger('reviewFor_id');
+            $table->foreign('reviewFor_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

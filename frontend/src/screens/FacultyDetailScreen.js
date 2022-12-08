@@ -7,8 +7,9 @@ import Message from '../components/Message'
 import {Container,Row,Col,Button,Form} from 'react-bootstrap'
 import Rating from '../components/Rating'
 import ReviewSection from '../components/ReviewSection'
-import { fetchReviews } from '../actions/reviewAction'
-
+import { createReviews, fetchReviews } from '../actions/reviewAction'
+import {Toast} from '../components/Toast'
+import { REVIEW_POST_RESET } from '../constants/reviewConstant'
 const FacultyDetailScreen = () => {
   const facultyDetail = useSelector(state=>state.facultyDetail) 
   const {loading,error,faculty} = facultyDetail 
@@ -17,18 +18,31 @@ const FacultyDetailScreen = () => {
 const[rating,setRating] =useState('')
 const[comment,setComment]= useState('')
   const getUserReview = useSelector(state => state.getReviews)
-  const {loadingReview,errorReview,reviews} = getUserReview
+  const {loading:loadingReview,error:errorReview,reviews} = getUserReview
 
   const dispatch = useDispatch()
   const {id} = useParams()
-const reviewForm =()=>{
-
+const reviewForm =(e)=>{
+  e.preventDefault()
+  dispatch(createReviews(id,rating,comment))
 }
-
+const postedReview = useSelector(state=>state.postReview)
+const{success:successPostedReview,error:errorPostedReview} = postedReview
   useEffect(()=>{
     dispatch(facultyDetailById(id))
     dispatch(fetchReviews(id))
-  },[dispatch,id])
+    if(successPostedReview){
+      Toast.fire({
+        title: 'Review Posted Successfully',
+        icon:'success'
+      })
+      setRating('')
+      setComment('')
+      dispatch({type:REVIEW_POST_RESET})
+      dispatch(fetchReviews(id))
+    }
+
+  },[dispatch,id,successPostedReview])
   return (
     <>
     {loading && <Loader />}
@@ -40,15 +54,20 @@ const reviewForm =()=>{
    
     {userInfo && userInfo.user.id === faculty.id ?(<>
      <Button variant="outline-primary" className="mt-1">Upload Photo</Button>
-     </>):(<></>)
+     </>):(<>
+     
+     </>)
      }
         </Col>
         <Col >
          <p>{faculty.name}</p>   
           <p>Email : {faculty.email}</p> 
-          <Form onSubmit={reviewForm}>
+          {errorPostedReview && <Message variant="danger">{error}</Message>}
+          {userInfo && userInfo.user.id !== faculty.id ?(
+            <>
+             <Form onSubmit={reviewForm}>
           <Form.Label>Rate Faculty</Form.Label>
-          <Form.Select aria-label="Default select example">
+          <Form.Select as="select" aria-label="Default select example" value={rating} onChange={e=>setRating(e.target.value)}>
       <option>Give Star</option>
       <option value="1">One-disappointment</option>
       <option value="2">Two-not bad</option>
@@ -58,10 +77,13 @@ const reviewForm =()=>{
       </Form.Select>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Comment faculty - {faculty.name}</Form.Label>
-        <Form.Control as="textarea" rows={3} />
+        <Form.Control as="textarea" rows={3} value={comment} onChange={e=>setComment(e.target.value)}/>
         <Button type="submit" className="mt-2" >Post</Button>
       </Form.Group>
           </Form>
+            </>
+          ):(<></>)}
+         
           {loadingReview && <Loader />}
           {errorReview && <Message variant="danger">{error}</Message>}
 {!reviews.message?(reviews.map(review=>(

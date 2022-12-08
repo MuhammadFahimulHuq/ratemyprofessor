@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\User;
 use App\Models\Reply;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,15 +11,15 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'rating',
         'comment',
-        'reviewBy_id',
+        'name',
         'reviewFor_id'
     ];
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsTo(User::class);
     }
-
 }

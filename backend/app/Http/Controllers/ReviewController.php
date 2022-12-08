@@ -26,7 +26,6 @@ class ReviewController extends Controller
             ]);
         }
         $user = auth()->user();
-        $userId = Auth::id();
         if (!$user) {
             return response([
                 'message' => 'unauthorized', 401
@@ -35,7 +34,7 @@ class ReviewController extends Controller
         $review = Review::create([
             'rating' => $field['rating'],
             'comment' => $field['comment'],
-            'reviewBy_id' => $userId,
+            'name' => $user->name,
             'reviewFor_id' => $id,
 
         ]);
