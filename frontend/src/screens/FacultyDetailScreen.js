@@ -5,11 +5,12 @@ import {facultyDetailById} from '../actions/userAction'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import {Container,Row,Col,Button,Form} from 'react-bootstrap'
-import Rating from '../components/Rating'
+import { LinkContainer } from 'react-router-bootstrap';
 import ReviewSection from '../components/ReviewSection'
 import { createReviews, fetchReviews } from '../actions/reviewAction'
 import {Toast} from '../components/Toast'
 import { REVIEW_POST_RESET } from '../constants/reviewConstant'
+import { Link } from 'react-router-dom'
 const FacultyDetailScreen = () => {
   const facultyDetail = useSelector(state=>state.facultyDetail) 
   const {loading,error,faculty} = facultyDetail 
@@ -82,7 +83,7 @@ const{success:successPostedReview,error:errorPostedReview} = postedReview
       </Form.Group>
           </Form>
             </>
-          ):(<></>)}
+          ):(<><small><Link to="/login">Sign in</Link> to give a review.</small></>)}
          
           {loadingReview && <Loader />}
           {errorReview && <Message variant="danger">{error}</Message>}
