@@ -1,28 +1,39 @@
-import {createStore,combineReducers,applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
-import {userLoginReducer,userRegisterReducer,getAllFacultyReducer, facultyDetailReducer} from './reducers/userReducer' 
-import { getReviewReducer,postReviewReducer } from './reducers/reviewReducer'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  getAllFacultyReducer,
+  facultyDetailReducer,
+} from "./reducers/userReducer";
+import { getReviewReducer, postReviewReducer } from "./reducers/reviewReducer";
+import { updateProfileReducer } from "./reducers/profileReducer";
+
 const reducer = combineReducers({
-userLogin: userLoginReducer,
-userRegister:userRegisterReducer,
-getAllFaculty:getAllFacultyReducer,
-facultyDetail : facultyDetailReducer,
-getReviews : getReviewReducer,
-postReview : postReviewReducer
-})
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  getAllFaculty: getAllFacultyReducer,
+  facultyDetail: facultyDetailReducer,
+  getReviews: getReviewReducer,
+  postReview: postReviewReducer,
+  updateProfile: updateProfileReducer,
+});
 
-
-const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')):null
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
 
 const initialState = {
-    userLogin:{userInfo:userInfoFromStorage}
-    
-}
+  userLogin: { userInfo: userInfoFromStorage },
+};
 
-const middleware=[thunk]
+const middleware = [thunk];
 
-const store = createStore(reducer,initialState,
-    composeWithDevTools(applyMiddleware(...middleware)))
+const store = createStore(
+  reducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
-export default store    
+export default store;

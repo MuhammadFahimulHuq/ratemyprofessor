@@ -38,6 +38,7 @@ Route::get('/faculty/{id}', [AuthController::class, 'getFacultyById']);
 Route::get('/get/review/{id}', [ReviewController::class, 'findReviewBy']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::put('/update/faculty',[AuthController::class,'updateFaculty']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/review/{id}', [ReviewController::class, 'store']);
     Route::get('/reply/{id}', [ReplyController::class, 'getReplyByReviewId']);
